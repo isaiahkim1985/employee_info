@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.firstTest.vo.Personal_VO" alias="personal"/>
+		<typeAlias type="com.firstTest.vo.Edu_background_VO" alias="edu_background"/>
+		<typeAlias type="com.firstTest.vo.License_VO" alias="license"/>
+		<typeAlias type="com.firstTest.vo.Career_VO" alias="career"/>
+		<typeAlias type="com.firstTest.vo.Skill_VO" alias="skill"/>
+		<typeAlias type="com.firstTest.vo.Training_VO" alias="training"/>
+	</typeAliases>
+</configuration>

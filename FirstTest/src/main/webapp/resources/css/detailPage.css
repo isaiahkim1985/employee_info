@@ -1,0 +1,27 @@
+@CHARSET "UTF-8";
+
+* {margin: 0px; padding: 0px;}
+body, td, input, select {font-family: '돋움'; font-size: 15px;}
+a {text-decoration: none; color: #000;}
+caption {display:none;}
+table {border-collapse: collapse; border: 0; align:center;}
+table td { border:1px solid black; height: 30px; vertical-align:middle;} 
+table td input{width:100%; height: 100%; vertical-align:middle;  align:center;}
+table th { border:1px solid black; vertical-align:middle;  align:center; text-align: center;}
+table input[type="text"] {outline-style: none; border: 0;}
+#containerDiv {width: 100%; }
+#containerDiv2 {width: 80%; margin:0 auto; padding-top: 50px;}
+#headerDiv, #footerDiv, #sectionDiv1, #sectionDiv2,#sectionDiv5 {width: 100%; padding-top: 20px;}
+#sectionDiv3 {width: 50%; float: left; padding-top: 20px;} 
+#sectionDiv4 {width: 45%; float: left; padding-top: 20px;}
+#sectionDiv5 {clear: both; width: 100%;}
+#sectionDiv6 {width: 50%; float: left; padding-top: 20px;} 
+#sectionDiv7 {width: 45%; float: left; padding-top: 20px;}
+#p_table, #p2_table, #edu_table, #l_table, #c_table, #t_table, #s_table{width: 90%;}
+#pm_start,#pm_end,#c_start,#c_end,#t_start,#t_end {width: 45%}
+.yellow {background-color: #FFFF8F;}
+.hideTd {border:0px;}
+.hideTd1{border: 0px;}
+#edu_inout, #p_sex, #pm_complete, #p_marriage, #s_level {width: 100%; height: 100%;}
+#footerDiv {clear: both;}
+#p_table, #p2_table td {align:center; text-align: center;}

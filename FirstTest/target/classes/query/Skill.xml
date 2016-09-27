@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.firstTest.dao.Skill_DAO">
+	
+	<!-- 상세 페이지를 위한 게시물 조회 -->
+	<select id="s_List" parameterType="skill" resultType="skill">
+		/* Skill - s_List */
+		SELECT p_num, s_num, s_ability, s_level
+		FROM skill
+		WHERE p_num = #{p_num}
+		ORDER BY s_num
+	</select>
+	
+	<!-- 게시물 등록 -->
+	<insert id="s_Insert" parameterType="skill">
+		<selectKey keyProperty="s_num" resultType="int" order="BEFORE">
+			/* s_Insert - insert */
+			select skill_seq.nextval from dual
+		</selectKey>
+		INSERT INTO skill(
+			p_num, 
+			s_num, 
+			s_ability, 
+			s_level)
+		VALUES(
+			#{p_num}, 
+			#{s_num}, 
+			#{s_ability},
+			#{s_level})
+	</insert>
+	
+
+	
+	<!-- 게시물 수정 -->
+	<update parameterType="skill" id="s_Update">
+		/* Skill - s_Update */
+ 		UPDATE skill SET
+			s_ability = #{s_ability}, 
+			s_level = #{s_level}
+			
+		WHERE p_num = #{p_num} AND s_num = #{s_num} 
+	</update>
+
+	<!-- 사원정보 삭제 -->
+	<delete parameterType="skill" id="s_Delete"> 
+		/* Skill - s_Delete */
+		DELETE FROM skill
+		WHERE p_num = #{p_num}
+	</delete>
+	
+	
+</mapper>

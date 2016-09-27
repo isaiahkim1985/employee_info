@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.firstTest.dao.Personal_DAO">
+	
+	<!-- 검색기능 -->
+	<sql id="main_Common">
+		SELECT p_num, p_name, p_join,p_dept,p_position,p_cell,p_email
+		FROM personal
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="search=='all'">
+				<![CDATA[ p_name LIKE '%'||#{keyword}||'%' or p_join LIKE '%'||#{keyword}||'%']]>
+			</if>
+			<if test="search=='p_name'">
+				<![CDATA[ AND p_name LIKE '%'||#{keyword}||'%']]>
+			</if>
+			<if test="search=='p_join'">
+				<![CDATA[ AND p_join LIKE '%'||#{keyword}||'%']]>
+			</if>
+		</trim>
+	</sql>
+	
+	<!-- 게시물 목록 조회 -->
+	<select id="main_List" parameterType="personal" resultType="personal">
+		SELECT p_num, p_name,p_join,p_dept,p_position,p_cell,p_email
+		FROM
+		(	SELECT list.*, ROWNUM AS RNUM
+			FROM (
+				<include refid="main_Common"></include> <!-- 위의 id가 main_Common인 검색기능 쿼리문에서 사용한 쿼리를 가져온다 -->
+				<choose>
+					<when test="order_by=='p_num'">
+						ORDER BY p_num
+					</when>
+					<when test="order_by=='p_join'">
+						ORDER BY p_join
+					</when>
+				</choose>
+				<choose>
+					<when test="order_sc=='ASC'">
+						ASC
+					</when>
+					<when test="order_sc=='DESC'">
+						DESC
+					</when>
+				</choose>
+			) list
+		)
+		<where>
+			<if test="start_row != null and start_row != ''">
+				<if test="end_row != null and end_row != ''">
+					RNUM BETWEEN #{start_row} AND #{end_row}
+				</if>
+			</if>
+		</where>
+	</select>
+	
+	<select id="main_ListCnt" parameterType="personal" resultType="int">
+		SELECT NVL(count(1), 0) FROM
+		(	SELECT list.*, ROWNUM AS RNUM
+			FROM (
+				<include refid="main_Common"></include>
+				ORDER BY p_num desc
+			) list
+		)
+	</select>
+	
+	<!-- 상세 페이지를 위한 게시물 조회 -->
+	<select id="p_Detail" parameterType="int" resultType="personal">
+		/* personal - p_detail */
+		SELECT p_num, p_name, p_number, p_sex, p_phone, p_cell, p_company, p_join, p_dept,
+			p_position, p_marriage, pm_complete, pm_start, pm_end, pm_branch, p_email, p_addr 
+		FROM personal
+		WHERE p_num = #{p_num}
+	</select>
+	
+	<!-- 게시물 등록 -->
+	<insert id="p_Insert" parameterType="personal">
+		<selectKey keyProperty="p_num" resultType="int" order="BEFORE">
+			/* Personal - insert */
+			select personal_seq.nextval from dual
+		</selectKey>
+		INSERT INTO personal(
+			p_num, 
+			p_name, 
+			p_number, 
+			p_sex, 
+			p_phone,
+			p_cell,
+			p_company,
+			p_join,
+			p_dept,
+			p_position,
+			p_marriage,
+			pm_complete,
+			pm_start,
+			pm_end,
+			pm_branch,
+			p_email, 
+			p_addr)
+		VALUES(
+			#{p_num}, 
+			#{p_name}, 
+			#{p_number}, 
+			#{p_sex}, 
+			#{p_phone},
+			#{p_cell},
+			#{p_company},
+			#{p_join},
+			#{p_dept},
+			#{p_position},
+			#{p_marriage},
+			#{pm_complete},
+			#{pm_start},
+			#{pm_end},
+			#{pm_branch},
+			#{p_email}, 
+			#{p_addr})
+	</insert>
+	
+	<!-- 다른테이블의 fk 등록을 위해 방금 등록한 p_num값 가져오기 -->
+	<select id="p_num_fk" parameterType="personal" resultType="personal">
+		select p_num, p_name, p_number, p_sex, p_phone, p_cell, p_company, p_join, p_dept, p_position, p_marriage, pm_complete, pm_start, pm_end, pm_branch, p_email, p_addr from personal where p_num = (select max(p_num) from personal)
+	</select>
+	
+	<!-- 사원정보 수정 -->
+	<update parameterType="personal" id="p_Update">
+		/* Personal - p_Update */
+ 		UPDATE personal SET  
+			p_name = #{p_name}, 
+			p_number = #{p_number}, 
+			p_sex = #{p_sex}, 
+			p_phone = #{p_phone},
+			p_cell = #{p_cell},
+			p_company = #{p_company},
+			p_join = #{p_join},
+			p_dept = #{p_dept},
+			p_position = #{p_position},
+			p_marriage = #{p_marriage},
+			pm_complete = #{pm_complete},
+			pm_start = #{pm_start},
+			pm_end = #{pm_end},
+			pm_branch = #{pm_branch},
+			p_email = #{p_email}, 
+			p_addr = #{p_addr}
+		WHERE p_num = #{p_num} 
+	</update>
+
+	<!-- 사원정보 삭제 -->
+	<delete parameterType="personal" id="p_Delete"> 
+		/* Personal - p_Delete */
+		DELETE FROM personal
+		WHERE p_num = #{p_num} 
+	</delete>
+	
+	<!-- 주민번호 중복검사 -->
+	<select id="juminOverlap" parameterType="String" resultType="int">
+		SELECT
+		COUNT(p_number)
+		FROM personal
+		WHERE p_number = #{p_number}
+	</select>
+	<!-- 이메일 중복검사 -->
+	<select id="mailOverlap" parameterType="String" resultType="int">
+		SELECT
+		COUNT(p_email)
+		FROM personal
+		WHERE p_email = #{p_email}
+	</select>
+	
+	
+</mapper>

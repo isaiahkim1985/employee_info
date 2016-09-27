@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.firstTest.dao.Career_DAO">
+	
+	<!-- 상세 페이지를 위한 게시물 조회 -->
+	<select id="c_List" parameterType="career" resultType="career">
+		/* Career - c_List */
+		SELECT p_num,c_num,c_name,c_start,c_end,c_position,c_dept
+		FROM career
+		WHERE p_num = #{p_num}
+		ORDER BY c_num
+	</select>
+	
+	<!-- 게시물 등록 -->
+	<insert id="c_Insert" parameterType="career">
+		<selectKey keyProperty="c_num" resultType="int" order="BEFORE">
+			/* c_Insert - insert */
+			select career_seq.nextval from dual
+		</selectKey>
+		INSERT INTO career(
+			p_num, 
+			c_num, 
+			c_name, 
+			c_start,
+			c_end,
+			c_position, 
+			c_dept)
+		VALUES(
+			#{p_num}, 
+			#{c_num}, 
+			#{c_name}, 
+			#{c_start}, 
+			#{c_end},
+			#{c_position},
+			#{c_dept})
+	</insert>
+	
+	<!-- 사원정보 수정 -->
+	<update parameterType="career" id="c_Update">
+		/* Career - c_Update */
+ 		UPDATE career SET 
+ 			c_name = #{c_name}, 
+			c_start = #{c_start},
+			c_end = #{c_end},
+			c_position = #{c_position}, 
+			c_dept = #{c_dept}
+			
+		WHERE p_num = #{p_num} AND c_num = #{c_num}
+	</update>
+
+	<!-- 사원정보 삭제 -->
+	<delete parameterType="career" id="c_Delete"> 
+		/* Career - c_Delete */
+		DELETE FROM career
+		WHERE p_num = #{p_num}
+	</delete>
+	
+	
+</mapper>

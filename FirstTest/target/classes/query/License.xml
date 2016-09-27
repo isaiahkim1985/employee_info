@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.firstTest.dao.License_DAO">
+
+
+	<!-- 상세 페이지를 위한 게시물 조회 -->
+	<select id="l_List" parameterType="license" resultType="license">
+		/* License - l_List */
+		SELECT l_num, p_num, l_name, l_date 
+		FROM license
+		WHERE p_num = #{p_num}
+		ORDER BY l_num
+	</select>
+	
+	<!-- 상세 페이지를 위한 게시물 조회 -->
+	<select id="l_Detail" parameterType="int" resultType="license">
+		/* License - l_Detail */
+		SELECT l_num, p_num, l_name, l_date 
+		FROM license
+		WHERE p_num = #{p_num}
+	</select>
+	
+	<!-- 게시물 등록 -->
+	<insert id="l_Insert" parameterType="license">
+		<selectKey keyProperty="l_num" resultType="int" order="BEFORE">
+			/* License - insert */
+			select license_seq.nextval from dual
+		</selectKey>
+		INSERT INTO license(
+			l_num, 
+			p_num, 
+			l_name, 
+			l_date)
+		VALUES(
+			#{l_num}, 
+			#{p_num}, 
+			#{l_name}, 
+			#{l_date})
+	</insert>	
+	
+	<!-- 사원정보 수정 -->
+	<update parameterType="license" id="l_Update">
+		/* License - l_Update */
+ 		UPDATE license SET 
+ 			l_name = #{l_name}, 
+			l_date = #{l_date}
+			
+		WHERE p_num = #{p_num} AND l_num = #{l_num} 
+	</update>
+
+	<!-- 사원정보 삭제 -->
+	<delete parameterType="license" id="l_Delete"> 
+		/* License - l_Delete */
+		DELETE FROM license
+		WHERE p_num = #{p_num}
+	</delete>
+
+
+</mapper>	

@@ -1,0 +1,49 @@
+@CHARSET "UTF-8";
+/* 공통 부분 */
+* {margin: 0px; padding: 0px;}
+body, td, input, select {font-family: '돋움'; font-size: 15px;}
+a {text-decoration: none; color: #000;}
+caption {display:none;}
+img {border: 0px;}
+
+/* 게시판 리스트 화면 */
+/* 제목 부분 */
+#mainPage_Container {width: 100%;}
+#mainPage_Container2 {width: 70%; margin: 0 auto; padding-top: 50px;}
+#mainPage_Tit{font-size: large; border-left: 10px solid #FFFF8F;
+	border-bottom: 1px solid #FFFF8F;
+	padding: 10px; width: 950px;}
+/* 검색부분 */
+#mainPage_Search table {width: 100%; text-align: right; margin: 10px; border-collapse: collapse;}
+#mainPage_Search #btd1 {width: 390px; text-align: left;}
+#mainPage_Search #btd2 {width: 390px; text-align: right;}
+
+/* 리스트 부분 */
+#mainPage_List {margin: 10px;}
+#mainPage_List table {width: 100%; padding: 0px; border: 1px solid #FFFF8F;
+	border-bottom: 0px; border-collapse: collapse;}
+#mainPage_List tr {padding: 0px;}
+#mainPage_List th {border-bottom: 1px solid #FFFF8F; border-right: 1px solid #FFFF8F;
+	padding: 5px; background-color: #FFFF8F;}
+#mainPage_List td {padding: 5px; border-bottom: 1px solid #B2EBF4;}
+#mainPage_List .borcle {border-right: 0px;}
+
+/* 버튼 부분 */
+#mainPage_Container #mainPage_But {width: 100%; margin: 0; text-align: right;}
+
+/* 페이징 출력 div 부분 */
+#mainPage_Container #mainPage_Page {width: 100%; margin: 0;}
+
+/* 페이징 버튼 부분 */
+.paginate {width: 100%; height: 20px; text-align: center; vertical-align: top; font-size: 14px;}
+.paginate span .textAn {vertical-align: top;}
+.paginate a.on {color: #F30;}
+
+.listTd {height: 50px; font-family: '돋움'; font-size: 18px;}
+#mainPage_inputBut {text-align: right; width: 100%; margin: 0px; padding: 0px; border: 0;}
+
+.goDetail:HOVER {
+	 background: #CEFBC9;
+}
+
+/* tr:hover { background: #CEFBC9; } */

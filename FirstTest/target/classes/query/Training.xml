@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.firstTest.dao.Training_DAO">
+	
+	<!-- 상세 페이지를 위한 게시물 조회 -->
+	<select id="t_List" parameterType="training" resultType="training">
+		/* Training - t_List */
+		SELECT p_num, t_num, t_name, t_start, t_end, t_institution
+		FROM training
+		WHERE p_num = #{p_num}
+		ORDER BY t_num
+	</select>
+	
+	<!-- 게시물 등록 -->
+	<insert id="t_Insert" parameterType="training">
+		<selectKey keyProperty="t_num" resultType="int" order="BEFORE">
+			/* t_Insert - insert */
+			select training_seq.nextval from dual
+		</selectKey>
+		INSERT INTO training(
+			p_num, 
+			t_num, 
+			t_name, 
+			t_start,
+			t_end,
+			t_institution)
+		VALUES(
+			#{p_num}, 
+			#{t_num}, 
+			#{t_name}, 
+			#{t_start}, 
+			#{t_end},
+			#{t_institution})
+	</insert>
+	
+	
+	<!-- 게시물 수정 -->
+	<update parameterType="training" id="t_Update">
+		/* Training - t_Update */
+ 		UPDATE training SET 
+ 			t_name = #{t_name}, 
+			t_start = #{t_start},
+			t_end = #{t_end},
+			t_institution = #{t_institution} 
+			
+		WHERE p_num = #{p_num} AND t_num = #{t_num}
+	</update>
+
+	<!-- 사원정보 삭제 -->
+	<delete parameterType="training" id="t_Delete"> 
+		/* Training - t_Delete */
+		DELETE FROM training
+		WHERE p_num = #{p_num}
+	</delete>
+	
+	
+</mapper>
